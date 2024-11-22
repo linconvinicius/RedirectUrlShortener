@@ -34,15 +34,16 @@ public class Main implements RequestHandler<Map<String, Object>, Map<String, Obj
 
         try {
             s3ObjectStream = s3Client.getObject(getObjectRequest);
-        } catch (Exception exception) {
-            throw new RuntimeException("Error fetching data from S3: " + exception.getMessage(), exception);
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching data from S3: " + e.getMessage(), e);
         }
 
         UrlData urlData;
+
         try {
             urlData = objectMapper.readValue(s3ObjectStream, UrlData.class);
-        } catch (Exception exception) {
-            throw new RuntimeException("Error deserializing URL data: " + exception.getMessage(), exception);
+        } catch (Exception e) {
+            throw new RuntimeException("Error deserializing URL data: " + e.getMessage(), e);
         }
 
         long currentTimeInSeconds = System.currentTimeMillis() / 1000;
